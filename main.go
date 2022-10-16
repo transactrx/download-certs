@@ -44,7 +44,9 @@ func main() {
 	secretName := fmt.Sprintf("cert.wildcard.%s", domain)
 	userHome, err := os.UserHomeDir()
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("%v", err)
+		log.Printf("user home is not defined, defaulting to /root")
+		userHome = "/root"
 	}
 	certsFolderName := fmt.Sprintf("%s/certs", userHome)
 	certFileName := fmt.Sprintf("%s/certs/%s.crt", userHome, domain)
