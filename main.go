@@ -51,7 +51,7 @@ func main() {
 	certsFolderName := fmt.Sprintf("%s/certs", userHome)
 	certFileName := fmt.Sprintf("%s/certs/%s.crt", userHome, domain)
 	keyFileName := fmt.Sprintf("%s/certs/%s.key", userHome, domain)
-	caFileName := fmt.Sprintf("%s/certs/%s.ca", userHome, domain)
+	//caFileName := fmt.Sprintf("%s/certs/%s.ca", userHome, domain)
 
 	client, err := getRouteSecretsManagerClient()
 	if err != nil {
@@ -113,16 +113,9 @@ func main() {
 				certF.WriteString(cert.Pem + "\n")
 			}
 		}
-
-		certCA, err := os.OpenFile(caFileName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0755)
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer certCA.Close()
-		certCA.Truncate(0)
 		for _, cert := range certs.Certs {
 			if cert.CertType == CertificateAuthority {
-				certCA.WriteString(cert.Pem + "\n")
+				certF.WriteString(cert.Pem + "\n")
 			}
 		}
 
